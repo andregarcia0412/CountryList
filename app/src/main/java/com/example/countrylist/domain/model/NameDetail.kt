@@ -1,4 +1,4 @@
-package com.example.countrylist.data.model
+package com.example.countrylist.domain.model
 
 data class NameDetail(
     val common: String,

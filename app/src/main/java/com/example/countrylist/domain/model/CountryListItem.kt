@@ -1,7 +1,7 @@
-package com.example.countrylist.data.model
+package com.example.countrylist.domain.model
 
 data class CountryListItem(
-    val flag: String,
+    val flags: FlagDetail,
     val name: NameDetail,
     val region: String
 )
