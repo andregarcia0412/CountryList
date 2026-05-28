@@ -1,13 +1,9 @@
 package com.example.countrylist.ui.screens.countrylist
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -24,8 +20,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.countrylist.ui.components.CenteredLoadingIndicator
 import com.example.countrylist.ui.components.CountryCard
-import com.example.countrylist.ui.screens.countrylist.components.Header
+import com.example.countrylist.ui.screens.countrydetail.CountryDetail
+import com.example.countrylist.ui.components.TopBarDefault
 import kotlinx.serialization.Serializable
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,7 +44,7 @@ fun CountryListScreen(navController: NavController) {
 
     Scaffold(
         containerColor = Color(0xFF141317),
-        topBar = { Header() }
+        topBar = { TopBarDefault("Countries List") }
     ) { innerPadding ->
         if (!screenState.isLoading) {
             LazyColumn(
@@ -119,19 +117,13 @@ fun CountryListScreen(navController: NavController) {
                 items(
                     screenState.displayCountries
                 ) { countryItem ->
-                    CountryCard(countryItem)
+                    CountryCard(countryItem) {
+                        navController.navigate(CountryDetail(countryItem.name.common))
+                    }
                 }
             }
         } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(50.dp)
-                )
-            }
+            CenteredLoadingIndicator()
         }
     }
 }

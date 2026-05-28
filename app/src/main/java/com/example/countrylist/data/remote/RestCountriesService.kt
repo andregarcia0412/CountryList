@@ -14,5 +14,5 @@ interface RestCountriesService {
     ): Response<List<CountryListItem>>
 
     @GET("name/{name}")
-    suspend fun getCountryDetail(@Path("name") name: String): Response<CountryDetail>
+    suspend fun getCountryDetail(@Path("name") name: String): Response<List<CountryDetail>>
 }

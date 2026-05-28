@@ -25,6 +25,6 @@ class RestCountriesRepository(
         val response = service.getCountryDetail(name)
         val countryDetail = response.body()
 
-        return countryDetail ?: throw Exception("País não encontrado")
+        return countryDetail?.firstOrNull() ?: throw Exception("País não encontrado")
     }
 }

@@ -28,7 +28,7 @@ import java.text.NumberFormat
 import java.util.Locale
 
 @Composable
-fun CountryCard(countryItem: CountryListItem) {
+fun CountryCard(countryItem: CountryListItem, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -37,6 +37,7 @@ fun CountryCard(countryItem: CountryListItem) {
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFF1C1B1F)
         ),
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),
