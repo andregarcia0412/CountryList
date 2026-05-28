@@ -3,5 +3,7 @@ package com.example.countrylist.domain.model
 data class CountryListItem(
     val flags: FlagDetail,
     val name: NameDetail,
-    val region: String
+    val continents: List<String>,
+    val capital: List<String>?,
+    val population: Long,
 )

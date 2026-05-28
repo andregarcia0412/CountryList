@@ -4,5 +4,14 @@ import com.example.countrylist.domain.model.CountryListItem
 
 data class CountryListState(
     val isLoading: Boolean = true,
-    val countryList: List<CountryListItem> = emptyList()
-)
+    val countryList: List<CountryListItem> = emptyList(),
+    val selectedContinent: String? = null,
+    val isDropdownOpen: Boolean = false
+) {
+    val displayCountries: List<CountryListItem>
+        get() =
+            if (selectedContinent == null)
+                countryList
+            else
+                countryList.filter { it.continents.first() == selectedContinent }
+}

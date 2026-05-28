@@ -3,8 +3,6 @@ package com.example.countrylist.ui.screens.countrylist
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.countrylist.data.remote.RestCountriesService
-import com.example.countrylist.data.remote.RetrofitService
 import com.example.countrylist.data.repository.RestCountriesRepository
 import com.example.countrylist.domain.repository.CountryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,12 +17,24 @@ class CountryListViewModel(
 
     init {
         viewModelScope.launch {
-            val countryList = repository.getCountryList("name,region,flags")
+            val countryList = repository.getCountryList("name,continents,flags,capital,population")
             Log.i("Country API: ", countryList.toString())
             _uiState.value = _uiState.value.copy(
                 isLoading = false,
-                countryList = countryList
+                countryList = countryList,
             )
         }
+    }
+
+    fun toggleDropdownMenu() {
+        _uiState.value = _uiState.value.copy(
+            isDropdownOpen = !_uiState.value.isDropdownOpen
+        )
+    }
+
+    fun updateSelectedContinent(continent: String?) {
+        _uiState.value = _uiState.value.copy(
+            selectedContinent = continent
+        )
     }
 }
