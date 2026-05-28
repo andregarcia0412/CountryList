@@ -17,12 +17,26 @@ class CountryDetailViewModel(
 
     fun getCountryDetail(name: String) {
         viewModelScope.launch {
-            val countryDetail = repository.getCountryDetail(name)
-            Log.i("Country API: ", countryDetail.toString())
-            _uiState.value = _uiState.value.copy(
-                isLoading = false,
-                countryDetail = countryDetail
-            )
+            try{
+                val countryDetail = repository.getCountryDetail(name)
+                Log.i("Country API: ", countryDetail.toString())
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    countryDetail = countryDetail
+                )
+            } catch(e: Exception) {
+                Log.i("Country API Error: ", e.message.toString())
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    error = "Unable to fetch country data"
+                )
+            }
         }
+    }
+
+    fun dismissError() {
+        _uiState.value = _uiState.value.copy(
+            error = null
+        )
     }
 }

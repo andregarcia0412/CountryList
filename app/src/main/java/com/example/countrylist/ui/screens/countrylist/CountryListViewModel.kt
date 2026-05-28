@@ -16,14 +16,7 @@ class CountryListViewModel(
     var uiState = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            val countryList = repository.getCountryList("name,continents,flags,capital,population")
-            Log.i("Country API: ", countryList.toString())
-            _uiState.value = _uiState.value.copy(
-                isLoading = false,
-                countryList = countryList,
-            )
-        }
+        getCountryList()
     }
 
     fun toggleDropdownMenu() {
@@ -36,5 +29,31 @@ class CountryListViewModel(
         _uiState.value = _uiState.value.copy(
             selectedContinent = continent
         )
+    }
+
+    fun dismissError() {
+        _uiState.value = _uiState.value.copy(
+            error = null
+        )
+    }
+
+    fun getCountryList() {
+        viewModelScope.launch {
+            try{
+                val countryList = repository.getCountryList("name,continents,flags,capital,population")
+                Log.i("Country API: ", countryList.toString())
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    countryList = countryList,
+                    error = null
+                )
+            } catch(e: Exception) {
+                Log.i("Country API Error: ", e.message.toString())
+                _uiState.value = _uiState.value.copy(
+                    isLoading = false,
+                    error = "Unable to fetch country list"
+                )
+            }
+        }
     }
 }

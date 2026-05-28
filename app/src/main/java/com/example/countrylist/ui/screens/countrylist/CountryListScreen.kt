@@ -24,6 +24,7 @@ import com.example.countrylist.ui.components.CenteredLoadingIndicator
 import com.example.countrylist.ui.components.CountryCard
 import com.example.countrylist.ui.screens.countrydetail.CountryDetail
 import com.example.countrylist.ui.components.TopBarDefault
+import com.example.countrylist.ui.components.TryAgainPopup
 import kotlinx.serialization.Serializable
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,7 +47,19 @@ fun CountryListScreen(navController: NavController) {
         containerColor = Color(0xFF141317),
         topBar = { TopBarDefault("Countries List") }
     ) { innerPadding ->
-        if (!screenState.isLoading) {
+        screenState.error?.let {
+            TryAgainPopup(
+                onDismissRequest = { },
+                onConfirmation = {
+                    countryListViewModel.dismissError()
+                    countryListViewModel.getCountryList()
+                },
+                dialogText = it,
+                dialogTitle = "Error"
+            )
+        }
+
+        if (!screenState.isLoading && screenState.countryList.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier
                     .padding(innerPadding)

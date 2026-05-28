@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -24,7 +22,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,6 +35,7 @@ import coil3.compose.AsyncImage
 import com.example.countrylist.ui.components.CenteredLoadingIndicator
 import com.example.countrylist.ui.components.InfoCard
 import com.example.countrylist.ui.components.TopBarDefault
+import com.example.countrylist.ui.components.TryAgainPopup
 import com.example.countrylist.util.NumberFormatter
 import kotlinx.serialization.Serializable
 
@@ -54,6 +52,18 @@ countryDetailViewModel.getCountryDetail(countryDetail.countryName)
         } },
         containerColor = Color(0xFF141317)
     ) { innerPadding ->
+        screenState.error?.let {
+            TryAgainPopup(
+                onDismissRequest = { },
+                onConfirmation = {
+                    countryDetailViewModel.dismissError()
+                    countryDetailViewModel.getCountryDetail(countryDetail.countryName)
+                },
+                dialogText = it,
+                dialogTitle = "Error"
+            )
+        }
+
         if(!screenState.isLoading && screenState.countryDetail != null) {
             Column(
                 modifier = Modifier
@@ -150,7 +160,6 @@ countryDetailViewModel.getCountryDetail(countryDetail.countryName)
                         icon = Icons.Default.Translate,
                     )
                 }
-
             }
         } else {
             CenteredLoadingIndicator()

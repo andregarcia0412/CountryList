@@ -6,7 +6,8 @@ data class CountryListState(
     val isLoading: Boolean = true,
     val countryList: List<CountryListItem> = emptyList(),
     val selectedContinent: String? = null,
-    val isDropdownOpen: Boolean = false
+    val isDropdownOpen: Boolean = false,
+    val error: String? = null
 ) {
     val displayCountries: List<CountryListItem>
         get() =

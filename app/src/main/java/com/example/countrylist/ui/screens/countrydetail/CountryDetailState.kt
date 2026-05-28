@@ -4,5 +4,6 @@ import com.example.countrylist.domain.model.CountryDetail
 
 data class CountryDetailState(
     val countryDetail: CountryDetail? = null,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val error: String? = null
 )
