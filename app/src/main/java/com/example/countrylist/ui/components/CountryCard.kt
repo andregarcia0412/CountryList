@@ -32,7 +32,7 @@ fun CountryCard(countryItem: CountryListItem, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(16.dp)
             .height(90.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFF1C1B1F)

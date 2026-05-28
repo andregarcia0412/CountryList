@@ -20,4 +20,8 @@ object NumberFormatter {
             else -> value.toString()
         }
     }
+
+    fun toLocaleString(value: Int): String {
+        return String.format(Locale.US, "%,d", value)
+    }
 }
