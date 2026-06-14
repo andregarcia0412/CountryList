@@ -1,7 +1,7 @@
 package com.example.countrylist.domain.model
 
 data class FlagDetail(
-    val png: String?,
-    val svg: String?,
-    val alt: String?
+    val url_png: String?,
+    val url_svg: String?,
+    val description: String?
 )

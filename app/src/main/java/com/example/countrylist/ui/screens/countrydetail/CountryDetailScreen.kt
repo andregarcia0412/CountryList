@@ -73,7 +73,7 @@ fun CountryDetailScreen(countryDetail: CountryDetail, navController: NavControll
             ) {
                 AsyncImage(
                     model = screenState.countryDetail.flagUrl,
-                    contentDescription = screenState.countryDetail.flag.alt,
+                    contentDescription = screenState.countryDetail.flag.description,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
                         .height(250.dp)
@@ -140,7 +140,7 @@ fun CountryDetailScreen(countryDetail: CountryDetail, navController: NavControll
 
                         InfoCard(
                             label = "AREA",
-                            value = NumberFormatter.toLocaleString((screenState.countryDetail.area.km2 ?: 0.0).toLong()) + "km²",
+                            value = NumberFormatter.toLocaleString((screenState.countryDetail.area.kilometers ?: 0.0).toLong()) + "km²",
                             icon = Icons.Default.SquareFoot,
                             modifier = Modifier.weight(1f)
                         )

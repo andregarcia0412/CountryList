@@ -41,11 +41,11 @@ class RestCountriesRepository(
 
     override suspend fun getCountryDetail(name: String): CountryDetail {
         val detailFields = "names,flag,codes,capitals,continents,population,area,currencies,languages"
-        return service.getCountryDetail(name, detailFields).data.values
+        val raw = service.getCountryDetail(name, detailFields).data.values
             .filter { it.isJsonArray }
-            .flatMap { arr ->
-                arr.asJsonArray.map { gson.fromJson<CountryDetail>(it, countryDetailType) }
-            }
+            .flatMap { arr -> arr.asJsonArray.toList() }
+        Log.i("Detail Raw JSON: ", raw.firstOrNull()?.toString() ?: "empty")
+        return raw.map { gson.fromJson<CountryDetail>(it, countryDetailType) }
             .firstOrNull()
             ?: throw Exception("Country not found")
     }

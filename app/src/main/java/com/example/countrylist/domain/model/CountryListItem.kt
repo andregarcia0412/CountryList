@@ -9,7 +9,7 @@ data class CountryListItem(
     val population: Long,
 ) {
     val flagUrl: String?
-        get() = flag.png ?: codes?.alpha_2?.lowercase()?.let {
+        get() = flag.url_png ?: codes?.alpha_2?.lowercase()?.let {
             "https://flags.restcountries.com/v5/w640/$it.png"
         }
 }

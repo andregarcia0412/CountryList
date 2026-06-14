@@ -43,7 +43,7 @@ fun CountryCard(countryItem: CountryListItem, onClick: () -> Unit) {
         ) {
             AsyncImage(
                 model = countryItem.flagUrl,
-                contentDescription = countryItem.flag.alt,
+                contentDescription = countryItem.flag.description,
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
                     .fillMaxHeight()
