@@ -44,7 +44,7 @@ fun CountryDetailScreen(countryDetail: CountryDetail, navController: NavControll
     val countryDetailViewModel: CountryDetailViewModel = viewModel()
     val screenState = countryDetailViewModel.uiState.collectAsState().value
 
-countryDetailViewModel.getCountryDetail(countryDetail.countryName)
+    countryDetailViewModel.getCountryDetail(countryDetail.countryName)
 
     Scaffold(
         topBar = { TopBarDefault(countryDetail.countryName) {
@@ -64,7 +64,7 @@ countryDetailViewModel.getCountryDetail(countryDetail.countryName)
             )
         }
 
-        if(!screenState.isLoading && screenState.countryDetail != null) {
+        if (!screenState.isLoading && screenState.countryDetail != null) {
             Column(
                 modifier = Modifier
                     .padding(innerPadding)
@@ -72,8 +72,8 @@ countryDetailViewModel.getCountryDetail(countryDetail.countryName)
                     .verticalScroll(rememberScrollState()),
             ) {
                 AsyncImage(
-                    model = screenState.countryDetail.flags.png,
-                    contentDescription = screenState.countryDetail.flags.alt,
+                    model = screenState.countryDetail.flagUrl,
+                    contentDescription = screenState.countryDetail.flag.alt,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
                         .height(250.dp)
@@ -83,18 +83,16 @@ countryDetailViewModel.getCountryDetail(countryDetail.countryName)
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Card(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(
                         containerColor = Color(0xFF1C1B1F)
                     ),
-
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = screenState.countryDetail.name.common,
+                            text = screenState.countryDetail.names.common,
                             color = Color.White,
                             fontSize = 20.sp,
                         )
@@ -102,7 +100,7 @@ countryDetailViewModel.getCountryDetail(countryDetail.countryName)
                         Spacer(modifier = Modifier.height(4.dp))
 
                         Text(
-                            text = screenState.countryDetail.name.official,
+                            text = screenState.countryDetail.names.official,
                             color = Color.White.copy(alpha = 0.8f),
                             fontSize = 16.sp
                         )
@@ -126,7 +124,7 @@ countryDetailViewModel.getCountryDetail(countryDetail.countryName)
 
                         InfoCard(
                             label = "CAPITAL",
-                            value = screenState.countryDetail.capital.firstOrNull() ?: "No capital",
+                            value = screenState.countryDetail.capitals.firstOrNull()?.name ?: "No capital",
                             icon = Icons.Default.LocationCity,
                             modifier = Modifier.weight(1f)
                         )
@@ -142,7 +140,7 @@ countryDetailViewModel.getCountryDetail(countryDetail.countryName)
 
                         InfoCard(
                             label = "AREA",
-                            value = NumberFormatter.toLocaleString(screenState.countryDetail.area) + "km²",
+                            value = NumberFormatter.toLocaleString((screenState.countryDetail.area.km2 ?: 0.0).toLong()) + "km²",
                             icon = Icons.Default.SquareFoot,
                             modifier = Modifier.weight(1f)
                         )
@@ -150,13 +148,13 @@ countryDetailViewModel.getCountryDetail(countryDetail.countryName)
 
                     InfoCard(
                         label = "CURRENCY",
-                        value = screenState.countryDetail.currencies.values.joinToString(),
+                        value = screenState.countryDetail.currencies.joinToString(),
                         icon = Icons.Default.Payments,
                     )
 
                     InfoCard(
                         label = "LANGUAGE",
-                        value = screenState.countryDetail.languages.values.joinToString(),
+                        value = screenState.countryDetail.languages.mapNotNull { it.name }.joinToString(),
                         icon = Icons.Default.Translate,
                     )
                 }

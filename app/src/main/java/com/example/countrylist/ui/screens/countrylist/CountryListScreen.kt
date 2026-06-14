@@ -131,7 +131,7 @@ fun CountryListScreen(navController: NavController) {
                     screenState.displayCountries
                 ) { countryItem ->
                     CountryCard(countryItem) {
-                        navController.navigate(CountryDetail(countryItem.name.common))
+                        navController.navigate(CountryDetail(countryItem.names.common))
                     }
                 }
             }

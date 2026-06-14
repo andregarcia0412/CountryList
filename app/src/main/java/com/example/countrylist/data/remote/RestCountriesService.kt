@@ -1,18 +1,21 @@
 package com.example.countrylist.data.remote
 
-import com.example.countrylist.domain.model.CountryDetail
-import com.example.countrylist.domain.model.CountryListItem
-import retrofit2.Response
+import com.example.countrylist.domain.model.ApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RestCountriesService {
-    @GET("all")
+    @GET("countries/v5")
     suspend fun getCountryList(
-        @Query("fields") fields: String
-    ): Response<List<CountryListItem>>
+        @Query("response_fields") fields: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int
+    ): ApiResponse
 
-    @GET("name/{name}")
-    suspend fun getCountryDetail(@Path("name") name: String): Response<List<CountryDetail>>
+    @GET("countries/v5/names.common/{name}")
+    suspend fun getCountryDetail(
+        @Path("name") name: String,
+        @Query("response_fields") fields: String
+    ): ApiResponse
 }

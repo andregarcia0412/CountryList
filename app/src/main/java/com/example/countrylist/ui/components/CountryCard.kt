@@ -24,8 +24,6 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.countrylist.domain.model.CountryListItem
 import com.example.countrylist.util.NumberFormatter
-import java.text.NumberFormat
-import java.util.Locale
 
 @Composable
 fun CountryCard(countryItem: CountryListItem, onClick: () -> Unit) {
@@ -44,8 +42,8 @@ fun CountryCard(countryItem: CountryListItem, onClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             AsyncImage(
-                model = countryItem.flags.png,
-                contentDescription = countryItem.flags.alt,
+                model = countryItem.flagUrl,
+                contentDescription = countryItem.flag.alt,
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier
                     .fillMaxHeight()
@@ -58,14 +56,14 @@ fun CountryCard(countryItem: CountryListItem, onClick: () -> Unit) {
                     .padding(horizontal = 16.dp),
             ) {
                 Text(
-                    text = countryItem.name.common,
+                    text = countryItem.names.common,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     color = Color.White
                 )
 
                 IconText(
-                    text = countryItem.capital?.firstOrNull() ?: "No capital",
+                    text = countryItem.capitals?.firstOrNull()?.name ?: "No capital",
                     icon = Icons.Default.LocationCity
                 )
 

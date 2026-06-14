@@ -21,7 +21,7 @@ object NumberFormatter {
         }
     }
 
-    fun toLocaleString(value: Int): String {
+    fun toLocaleString(value: Long): String {
         return String.format(Locale.US, "%,d", value)
     }
 }

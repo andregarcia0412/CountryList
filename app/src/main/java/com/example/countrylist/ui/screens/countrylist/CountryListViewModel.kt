@@ -40,7 +40,7 @@ class CountryListViewModel(
     fun getCountryList() {
         viewModelScope.launch {
             try{
-                val countryList = repository.getCountryList("name,continents,flags,capital,population")
+                val countryList = repository.getCountryList("names,continents,flag,codes,capitals,population")
                 Log.i("Country API: ", countryList.toString())
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,

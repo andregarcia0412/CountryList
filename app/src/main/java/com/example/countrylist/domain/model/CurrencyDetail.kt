@@ -1,10 +1,14 @@
 package com.example.countrylist.domain.model
 
 data class CurrencyDetail(
-    val symbol: String,
-    val name: String
+    val code: String?,
+    val name: String?,
+    val symbol: String?
 ) {
     override fun toString(): String {
-        return "$name ($symbol)"
+        return buildString {
+            if (!name.isNullOrEmpty()) append(name)
+            if (!symbol.isNullOrEmpty()) append(" ($symbol)")
+        }
     }
 }
